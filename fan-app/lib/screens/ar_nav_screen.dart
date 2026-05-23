@@ -578,6 +578,8 @@ class _ARNavScreenState extends State<ARNavScreen>
     return InkWell(
       onTap: onTap,
       child: Container(
+        constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+        alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
           color: active ? _primary : Colors.white.withOpacity(0.04),

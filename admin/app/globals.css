@@ -800,6 +800,50 @@ input, textarea, select { font-family: var(--font); }
   margin-top: 8px;
 }
 
+/* ── Responsive & Mobile Adjustments ────────────────────── */
+@media (max-width: 1024px) {
+  .kpi-grid, .sector-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+  .mini-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .app-shell {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 16px;
+  }
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .nav-link {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+  .main-content {
+    padding: 16px;
+    overflow: visible;
+  }
+  .kpi-grid, .sector-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .example-chip {
   padding: 8px 16px;
   background: var(--surface2);

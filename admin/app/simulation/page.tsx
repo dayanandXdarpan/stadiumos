@@ -365,6 +365,8 @@ The connection to the central debrief engine timed out. Operational data was suc
                   </div>
                 </div>
               ))}
+            </div>
+          )}
         </div>
 
         {/* Footer */}

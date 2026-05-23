@@ -323,6 +323,8 @@ class _SeatViewScreenState extends State<SeatViewScreen>
               InkWell(
                 onTap: () => Navigator.pushReplacementNamed(context, '/'),
                 child: Container(
+                  constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
+                  alignment: Alignment.center,
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.06),

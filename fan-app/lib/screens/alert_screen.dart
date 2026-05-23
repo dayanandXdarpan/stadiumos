@@ -149,8 +149,8 @@ class _AlertScreenState extends State<AlertScreen>
           IconButton(
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.arrow_back_ios_new, color: _primary, size: 18),
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
+            padding: const EdgeInsets.all(10),
+            constraints: const BoxConstraints(minWidth: 44, minHeight: 44),
           ),
           const SizedBox(width: 12),
           Expanded(

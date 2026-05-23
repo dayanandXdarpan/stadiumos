@@ -322,6 +322,7 @@ export default function AgentLedgerPage() {
               }} />
               {isConnected ? 'Live' : 'Mock'}
             </div>
+          </div>
         </div>
 
         {/* Filter Bar */}

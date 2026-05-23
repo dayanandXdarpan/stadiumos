@@ -214,6 +214,8 @@ export default function OverviewPage() {
                   onMouseMove={handleMouseMove}
                   onMouseLeave={handleMouseLeave}
                   style={{ overflow: 'visible', cursor: 'crosshair' }}
+                  role="img"
+                  aria-label="Interactive Crowd Pressure Score Trend Chart"
                 >
                   <defs>
                     <linearGradient id="chart-area-grad" x1="0" y1="0" x2="0" y2="1">

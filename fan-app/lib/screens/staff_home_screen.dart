@@ -274,6 +274,8 @@ class _StaffHomeScreenState extends State<StaffHomeScreen>
         setState(() => _offlineMode = !_offlineMode);
       },
       child: Container(
+        constraints: const BoxConstraints(minHeight: 44),
+        alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(
           color: (_offlineMode ? Colors.red : const Color(0xFF00FF88)).withOpacity(0.08),

@@ -529,6 +529,7 @@ function DigitalTwinContent() {
                 <span className="orbit-name">Zoom</span>
                 <input
                   type="range"
+                  aria-label="3D Camera Zoom"
                   min="0.5"
                   max="3.5"
                   step="0.05"
@@ -544,6 +545,7 @@ function DigitalTwinContent() {
                 <span className="orbit-name">Pitch</span>
                 <input
                   type="range"
+                  aria-label="3D Camera Pitch"
                   min="0.1"
                   max="1.5"
                   step="0.02"
@@ -559,6 +561,7 @@ function DigitalTwinContent() {
                 <span className="orbit-name">Yaw</span>
                 <input
                   type="range"
+                  aria-label="3D Camera Yaw"
                   min="-3.14"
                   max="3.14"
                   step="0.02"
@@ -579,6 +582,7 @@ function DigitalTwinContent() {
               <label className="toggle-switch" style={{ width: 44, height: 24 }}>
                 <input
                   type="checkbox"
+                  aria-label="Toggle 3D Spatial Heatmap Sensor"
                   checked={showHeatmap}
                   onChange={(e) => setShowHeatmap(e.target.checked)}
                 />
@@ -592,6 +596,7 @@ function DigitalTwinContent() {
               <label className="toggle-switch" style={{ width: 44, height: 24 }}>
                 <input
                   type="checkbox"
+                  aria-label="Toggle Neon FlowMaster Vector Path"
                   checked={showReroute}
                   onChange={(e) => setShowReroute(e.target.checked)}
                 />
