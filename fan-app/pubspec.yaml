@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -17,14 +17,30 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_animate: ^4.5.0
   lottie: ^3.1.0
-  video_player: ^2.8.2
+  # video_player removed — unused dependency
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.14.1
+  flutter_native_splash: ^2.4.1
 
 flutter:
   uses-material-design: true
   assets:
     - assets/images/
+
+# ── Launcher Icon Configuration ────────────────────────────────────────────
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: 'assets/images/app_icon.png'
+  # If assets/images/app_icon.png doesn't exist, the default Flutter icon is used.
+  # Generate it with: flutter pub run flutter_launcher_icons
+
+# ── Native Splash Screen ──────────────────────────────────────────────────
+flutter_native_splash:
+  color: '#0a0f1e'
+  android: true
+  ios: false

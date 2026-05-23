@@ -121,7 +121,7 @@ export default function OverviewPage() {
 
   return (
     <div className="app-shell">
-      <Sidebar />
+      <Sidebar isConnected={isConnected} />
       <main className="main-content">
         {/* Page Header */}
         <div className="page-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

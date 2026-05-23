@@ -19,11 +19,16 @@ const BASE_URL = typeof window !== 'undefined'
   ? (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000')
   : 'http://localhost:8000';
 
+const API_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN || 'stadiumos-demo-token';
+
 async function apiPost(path: string, body?: object) {
   try {
     await fetch(`${BASE_URL}${path}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_TOKEN}`,
+      },
       body: body ? JSON.stringify(body) : undefined,
       signal: AbortSignal.timeout(4000),
     });
@@ -108,7 +113,10 @@ export default function SimulationPage() {
     try {
       await fetch(`${BASE_URL}/api/edge/offline`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${API_TOKEN}`,
+        },
         body: JSON.stringify({ offline: next })
       });
       
@@ -142,7 +150,8 @@ export default function SimulationPage() {
     setDebriefLoading(true);
     try {
       const res = await fetch(`${BASE_URL}/api/post-match/debrief`, {
-        method: 'POST'
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${API_TOKEN}` },
       });
       const data = await res.json();
       setDebriefContent(data.report);

@@ -90,9 +90,13 @@ export function formatRelativeTime(timestamp: number | string | Date): string {
   return `${Math.floor(diff / 86_400_000)}d ago`;
 }
 
-/** Generate a unique id */
+/** Generate a unique id using the Web Crypto API (collision-safe) */
 export function uid(): string {
-  return Math.random().toString(36).slice(2);
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  // Fallback for environments without crypto.randomUUID
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 }
 
 // ── Sector ID helpers ────────────────────────────────────────

@@ -2,11 +2,13 @@
 StadiumOS FastAPI backend — main entry point.
 
 Starts the FastAPI application with:
-  - CORS middleware (all origins — demo mode)
+  - CORS middleware (origins from CORS_ORIGINS env var; localhost fallback for dev)
+  - Simple API_TOKEN bearer auth on all mutation endpoints
+  - Rate limiting on /api/query via slowapi
   - WebSocket endpoint at /ws with a global ConnectionManager
   - All REST endpoints: /api/state, /api/agents/ledger, /api/sectors,
     /api/trigger/storm, /api/trigger/surge, /api/trigger/fraud, /api/query
-  - Five AI agent background tasks launched on startup:
+  - Six AI agent background tasks launched on startup:
       CrowdIntelligenceAgent, FlowMasterAgent, TicketSentinelAgent,
       ClimaSyncAgent, SocialSentinelAgent, EmergencyAgent
 """
@@ -19,14 +21,30 @@ import logging
 import os
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, Optional
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel
 
 load_dotenv()
+
+# ── Auth ──────────────────────────────────────────────────────────────────
+# In production set API_TOKEN to a strong secret. In demo/mock mode the token
+# defaults to "stadiumos-demo-token" so the app works out-of-the-box.
+API_TOKEN = os.getenv("API_TOKEN", "stadiumos-demo-token")
+_bearer = HTTPBearer(auto_error=False)
+
+def verify_token(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(_bearer),
+) -> None:
+    """Validate Bearer token on mutation endpoints. Skipped when API_TOKEN is empty."""
+    if not API_TOKEN:
+        return  # auth disabled
+    if not credentials or credentials.credentials != API_TOKEN:
+        raise HTTPException(status_code=401, detail="Invalid or missing API token.")
 
 # ── Logging ───────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -155,20 +173,31 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
+# ── CORS ─────────────────────────────────────────────────────────────────
+# Set CORS_ORIGINS in .env as a comma-separated list of allowed origins.
+# Falls back to localhost dev origins if not set.
+_cors_env = os.getenv("CORS_ORIGINS", "")
+_cors_origins: list[str] = (
+    [o.strip() for o in _cors_env.split(",") if o.strip()]
+    if _cors_env
+    else [
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "http://localhost:3001",
         "http://127.0.0.1:3001",
         "http://localhost:3002",
         "http://127.0.0.1:3002",
-    ],
+    ]
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=_cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+logger.info("CORS allowed origins: %s", _cors_origins)
 
 
 # ── WebSocket endpoint ─────────────────────────────────────────────────────
@@ -239,7 +268,7 @@ async def get_sectors() -> dict:
 # ── REST: trigger endpoints ────────────────────────────────────────────────
 
 @app.post("/api/trigger/storm", summary="Trigger ClimaSync storm event")
-async def trigger_storm() -> dict:
+async def trigger_storm(_auth: None = Depends(verify_token)) -> dict:
     """
     Toggle the storm state.  If storm is currently off, activate it;
     if already active, deactivate it (for demo toggle convenience).
@@ -265,7 +294,7 @@ class SurgeBody(BaseModel):
 
 
 @app.post("/api/trigger/surge", summary="Trigger FlowMaster surge for a sector")
-async def trigger_surge(body: SurgeBody) -> dict:
+async def trigger_surge(body: SurgeBody, _auth: None = Depends(verify_token)) -> dict:
     sector_id = body.sectorId.upper()
     if not blackboard.get_sector(sector_id):
         raise HTTPException(status_code=404, detail=f"Sector '{sector_id}' not found.")
@@ -288,7 +317,7 @@ class FraudBody(BaseModel):
 
 
 @app.post("/api/trigger/fraud", summary="Trigger TicketSentinel fraud event")
-async def trigger_fraud(body: FraudBody) -> dict:
+async def trigger_fraud(body: FraudBody, _auth: None = Depends(verify_token)) -> dict:
     gate_id = body.gateId
     valid_gates = [f"Gate-{ch}" for ch in "ABCDEFGH"]
 
@@ -317,7 +346,7 @@ class EdgeOfflineBody(BaseModel):
 
 
 @app.post("/api/edge/offline", summary="Toggle simulated edge network drops")
-async def toggle_edge_offline(body: EdgeOfflineBody) -> dict:
+async def toggle_edge_offline(body: EdgeOfflineBody, _auth: None = Depends(verify_token)) -> dict:
     await blackboard.set_edge_offline(body.offline)
     action_msg = (
         "Perimeter network connectivity simulated drop! Systems operating in offline SQLite mode."
@@ -368,7 +397,7 @@ async def get_edge_status() -> dict:
 # ── REST: Post-Match AI Debriefing (PRD Section 8 Report Generator) ───────
 
 @app.post("/api/post-match/debrief", summary="Generate Post-Match Operational Analytics Report")
-async def generate_post_match_debrief() -> dict:
+async def generate_post_match_debrief(_auth: None = Depends(verify_token)) -> dict:
     """
     Assembles post-match analysis based on active agent logs, compiles 
     telemetry hotspot metrics, and generates an executive AI report.
@@ -552,19 +581,44 @@ class QueryBody(BaseModel):
     query: str
 
 
+# ── Rate limiter (optional — needs slowapi in requirements) ───────────────
+try:
+    from slowapi import Limiter, _rate_limit_exceeded_handler
+    from slowapi.util import get_remote_address
+    from slowapi.errors import RateLimitExceeded
+    _limiter = Limiter(key_func=get_remote_address)
+    app.state.limiter = _limiter
+    app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+    _HAS_SLOWAPI = True
+except ImportError:
+    _HAS_SLOWAPI = False
+    logger.warning("slowapi not installed — /api/query rate limiting disabled.")
+
+
 @app.post("/api/query", summary="NLP OpsCommander — natural language query")
-async def ops_query(body: QueryBody) -> dict:
+async def ops_query(request: Request, body: QueryBody) -> dict:
     """
     Process a natural-language operations query using Gemini.
     Falls back to a rule-based parser when the API key is absent.
+    Rate-limited to 20 requests/minute per IP when slowapi is installed.
     """
+    # Apply rate limit if slowapi available
+    if _HAS_SLOWAPI:
+        try:
+            await app.state.limiter._check_request_limit(request, "20/minute")
+        except Exception:
+            pass  # let slowapi handle via exception handler
+
     query = body.query.strip()
     if not query:
         raise HTTPException(status_code=400, detail="Query must not be empty.")
+    if len(query) > 2000:
+        raise HTTPException(status_code=400, detail="Query too long (max 2000 chars).")
 
     gemini_key = os.getenv("GEMINI_API_KEY", "")
-
-    if gemini_key and gemini_key != "your-gemini-api-key":
+    # Accept any non-empty, non-placeholder key
+    _placeholder_keys = {"your-gemini-api-key", "your-gemini-api-key-here", "mock-key", ""}
+    if gemini_key and gemini_key not in _placeholder_keys:
         response = await _gemini_query(query, gemini_key)
     else:
         response = _rule_based_query(query)

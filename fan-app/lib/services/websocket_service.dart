@@ -8,8 +8,13 @@ class WebSocketService {
   factory WebSocketService() => _instance;
   WebSocketService._internal();
 
-  static const String _defaultUrl = 'ws://10.0.2.2:8000/ws';
-  String _url = _defaultUrl;
+  // Configurable via --dart-define=WS_URL=ws://your-backend/ws at build time.
+  // Defaults to Android emulator localhost for dev, falls back gracefully.
+  static const String _dartDefineUrl = String.fromEnvironment(
+    'WS_URL',
+    defaultValue: 'ws://10.0.2.2:8000/ws',
+  );
+  String _url = _dartDefineUrl;
 
   WebSocketChannel? _channel;
   StreamController<Map<String, dynamic>>? _controller;

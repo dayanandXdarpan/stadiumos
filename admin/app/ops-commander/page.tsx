@@ -31,6 +31,13 @@ const API_URL = typeof window !== 'undefined'
   ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/query`
   : 'http://localhost:8000/api/query';
 
+const API_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN || 'stadiumos-demo-token';
+
+function genId(): string {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+}
+
 // Mock AI responses when backend is not available
 function getMockResponse(query: string): QueryResult {
   const q = query.toLowerCase();
@@ -99,7 +106,7 @@ export default function OpsCommanderPage() {
   const sendQuery = async (query: string) => {
     if (!query.trim() || loading) return;
     const userMsg: Message = {
-      id: Math.random().toString(36).slice(2),
+      id: genId(),
       type: 'user',
       content: query,
       timestamp: Date.now(),
@@ -111,13 +118,13 @@ export default function OpsCommanderPage() {
     try {
       const res = await fetch(API_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${API_TOKEN}` },
         body: JSON.stringify({ query }),
         signal: AbortSignal.timeout(5000),
       });
       const data = await res.json();
       const aiMsg: Message = {
-        id: Math.random().toString(36).slice(2),
+        id: genId(),
         type: 'ai',
         content: query,
         data: data.result ?? { type: 'text', text: JSON.stringify(data) },
@@ -128,7 +135,7 @@ export default function OpsCommanderPage() {
       // Backend not available — use mock
       await new Promise(r => setTimeout(r, 800));
       const aiMsg: Message = {
-        id: Math.random().toString(36).slice(2),
+        id: genId(),
         type: 'ai',
         content: query,
         data: getMockResponse(query),

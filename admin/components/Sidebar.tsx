@@ -22,12 +22,18 @@ const AGENTS = [
   { name: 'EA', color: '#ff4444', title: 'EmergencyAgent'    },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  isConnected?: boolean;
+}
+
+export default function Sidebar({ isConnected }: SidebarProps) {
   const pathname = usePathname();
 
   // Exact match for root, prefix match for all others
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href);
+
+  const agentOnline = isConnected !== false; // default to showing online if not passed
 
   return (
     <aside className="sidebar">
@@ -57,13 +63,25 @@ export default function Sidebar() {
       <div className="sidebar-status">
         <div className="status-title">System Status</div>
         <div className="status-label">
-          <div className="status-dot" />
-          All Systems Operational
+          <div
+            className="status-dot"
+            style={{
+              background: agentOnline ? 'var(--success)' : 'var(--danger)',
+              animation: agentOnline ? 'pulse-glow 2s infinite' : 'pulse-danger 2s infinite',
+            }}
+          />
+          {agentOnline ? 'All Systems Operational' : 'Backend Offline — Mock Mode'}
         </div>
         <div className="agent-dots">
           {AGENTS.map(a => (
             <div key={a.name} className="agent-dot-item" title={a.title}>
-              <div className="dot" style={{ background: a.color, boxShadow: `0 0 4px 2px ${a.color}55` }} />
+              <div
+                className="dot"
+                style={{
+                  background: agentOnline ? a.color : '#64748b',
+                  boxShadow: agentOnline ? `0 0 4px 2px ${a.color}55` : 'none',
+                }}
+              />
               {a.name}
             </div>
           ))}
