@@ -32,6 +32,7 @@ ENV NEXT_PUBLIC_WS_URL=$NEXT_PUBLIC_WS_URL
 ENV NEXT_PUBLIC_API_TOKEN=$NEXT_PUBLIC_API_TOKEN
 ENV NEXT_TELEMETRY_DISABLED=1
 
+RUN mkdir -p public
 RUN npm run build
 
 # ── Stage 3: Install Python deps for backend ─────────────────────────────
@@ -72,7 +73,7 @@ WORKDIR /app/admin
 COPY --from=admin-builder /app/package.json ./package.json
 COPY --from=admin-builder /app/node_modules ./node_modules
 COPY --from=admin-builder /app/.next ./.next
-COPY --from=admin-builder /app/public ./public 2>/dev/null || true
+COPY --from=admin-builder /app/public ./public
 
 # ── Copy nginx config + startup script ───────────────────────────────────
 COPY nginx.conf /etc/nginx/nginx.conf
