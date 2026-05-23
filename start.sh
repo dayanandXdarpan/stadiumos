@@ -4,14 +4,11 @@
 # inside a single Cloud Run container.
 # ────────────────────────────────────────────────────────────────────────
 
-set -e
-
 echo "╔══════════════════════════════════════════════════╗"
 echo "║          StadiumOS — Starting Services           ║"
 echo "╚══════════════════════════════════════════════════╝"
 
 # ── Substitute PORT into nginx config ────────────────────────────────────
-# Cloud Run injects PORT (default 8080). Replace the listen directive.
 export PORT="${PORT:-8080}"
 sed -i "s/listen 8080;/listen ${PORT};/" /etc/nginx/nginx.conf
 echo "[nginx]   Configured to listen on port ${PORT}"
@@ -34,30 +31,30 @@ RETRIES=0
 MAX_RETRIES=30
 
 # Wait for FastAPI
-until curl -sf http://127.0.0.1:8000/health > /dev/null 2>&1; do
-    RETRIES=$((RETRIES + 1))
-    if [ $RETRIES -ge $MAX_RETRIES ]; then
-        echo "[startup] ✗ Backend failed to start after ${MAX_RETRIES}s"
+while [ "$RETRIES" -lt "$MAX_RETRIES" ]; do
+    if curl -sf http://127.0.0.1:8000/health > /dev/null 2>&1; then
+        echo "[backend] ✓ Healthy"
         break
     fi
+    RETRIES=$((RETRIES + 1))
     sleep 1
 done
-if [ $RETRIES -lt $MAX_RETRIES ]; then
-    echo "[backend] ✓ Healthy"
+if [ "$RETRIES" -ge "$MAX_RETRIES" ]; then
+    echo "[startup] ✗ Backend failed to start after ${MAX_RETRIES}s"
 fi
 
 # Wait for Next.js
 RETRIES=0
-until curl -sf http://127.0.0.1:3000 > /dev/null 2>&1; do
-    RETRIES=$((RETRIES + 1))
-    if [ $RETRIES -ge $MAX_RETRIES ]; then
-        echo "[startup] ✗ Admin failed to start after ${MAX_RETRIES}s"
+while [ "$RETRIES" -lt "$MAX_RETRIES" ]; do
+    if curl -sf http://127.0.0.1:3000 > /dev/null 2>&1; then
+        echo "[admin]   ✓ Healthy"
         break
     fi
+    RETRIES=$((RETRIES + 1))
     sleep 1
 done
-if [ $RETRIES -lt $MAX_RETRIES ]; then
-    echo "[admin]   ✓ Healthy"
+if [ "$RETRIES" -ge "$MAX_RETRIES" ]; then
+    echo "[startup] ✗ Admin failed to start after ${MAX_RETRIES}s"
 fi
 
 # ── Start nginx in foreground (Cloud Run needs a foreground process) ─────
@@ -70,7 +67,18 @@ echo "║   WS:     ws://localhost:${PORT}/ws                ║"
 echo "║   Health: http://localhost:${PORT}/health           ║"
 echo "╚══════════════════════════════════════════════════╝"
 
-# Trap signals for graceful shutdown
-trap "echo '[shutdown] Stopping ...'; kill $BACKEND_PID $ADMIN_PID 2>/dev/null; nginx -s quit; exit 0" SIGTERM SIGINT
+# Graceful shutdown — POSIX sh uses TERM/INT (not SIGTERM/SIGINT)
+cleanup() {
+    echo "[shutdown] Stopping ..."
+    kill "$BACKEND_PID" "$ADMIN_PID" 2>/dev/null || true
+    nginx -s quit 2>/dev/null || true
+    exit 0
+}
+trap cleanup TERM INT
 
-nginx -g "daemon off;"
+# nginx in foreground — this keeps the container alive
+nginx -g "daemon off;" &
+NGINX_PID=$!
+
+# Wait for any process to exit
+wait $NGINX_PID

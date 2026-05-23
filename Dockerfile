@@ -78,7 +78,9 @@ COPY --from=admin-builder /app/public ./public
 # ── Copy nginx config + startup script ───────────────────────────────────
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY start.sh /app/start.sh
-RUN chmod +x /app/start.sh
+# Strip Windows CRLF line endings that break /bin/sh
+RUN sed -i 's/\r$//' /app/start.sh /etc/nginx/nginx.conf \
+    && chmod +x /app/start.sh
 
 # Nginx needs write access to these
 RUN mkdir -p /var/lib/nginx/body /var/lib/nginx/proxy \
