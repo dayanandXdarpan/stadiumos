@@ -1,0 +1,56 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: stadiumos-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 5
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: stadiumos-backend
+    ports:
+      - "8000:8080"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - EDGE_MODE=false
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/service-account.json
+    volumes:
+      - ./backend/service-account.json:/app/service-account.json:ro
+    env_file:
+      - ./backend/.env
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  mock-ingestor:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: stadiumos-ingestor
+    command: python simulator/mock_ingestor.py
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/service-account.json
+    volumes:
+      - ./backend/service-account.json:/app/service-account.json:ro
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - backend
+    restart: unless-stopped
+    profiles:
+      - ingestor
+
+volumes:
+  redis_data:

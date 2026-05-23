@@ -1,0 +1,52 @@
+steps:
+  # Step 1: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/stadiumos-backend:$COMMIT_SHA'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/stadiumos-backend:latest'
+      - '.'
+    dir: 'backend'
+
+  # Step 2: Push the image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '--all-tags'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/stadiumos-backend'
+
+  # Step 3: Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'stadiumos-backend'
+      - '--image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/stadiumos-backend:$COMMIT_SHA'
+      - '--region=${_REGION}'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--port=8080'
+      - '--set-env-vars=GCP_PROJECT_ID=$PROJECT_ID,PUBSUB_TOPIC=${_PUBSUB_TOPIC},PUBSUB_SUBSCRIPTION=${_PUBSUB_SUBSCRIPTION},FIRESTORE_COLLECTION=${_FIRESTORE_COLLECTION}'
+      - '--set-secrets=GEMINI_API_KEY=gemini-api-key:latest'
+      - '--min-instances=1'
+      - '--max-instances=10'
+      - '--memory=1Gi'
+      - '--cpu=1'
+
+substitutions:
+  _REGION: 'us-central1'
+  _REPO_NAME: 'stadiumos'
+  _PUBSUB_TOPIC: 'stadium-events'
+  _PUBSUB_SUBSCRIPTION: 'stadium-events-sub'
+  _FIRESTORE_COLLECTION: 'stadium-state'
+
+images:
+  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/stadiumos-backend:$COMMIT_SHA'
+  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/stadiumos-backend:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8'

@@ -1,0 +1,50 @@
+steps:
+  # Step 1: Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/stadiumos-admin:$COMMIT_SHA'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/stadiumos-admin:latest'
+      - '.'
+    dir: 'admin'
+
+  # Step 2: Push the image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - '--all-tags'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/stadiumos-admin'
+
+  # Step 3: Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'stadiumos-admin'
+      - '--image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/stadiumos-admin:$COMMIT_SHA'
+      - '--region=${_REGION}'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - '--port=8080'
+      - '--set-env-vars=NEXT_PUBLIC_API_URL=${_NEXT_PUBLIC_API_URL},NEXT_PUBLIC_WS_URL=${_NEXT_PUBLIC_WS_URL}'
+      - '--min-instances=1'
+      - '--max-instances=5'
+      - '--memory=1Gi'
+      - '--cpu=1'
+
+substitutions:
+  _REGION: 'us-central1'
+  _REPO_NAME: 'stadiumos'
+  _NEXT_PUBLIC_API_URL: 'https://stadiumos-backend-slug-uc.a.run.app'
+  _NEXT_PUBLIC_WS_URL: 'wss://stadiumos-backend-slug-uc.a.run.app/ws'
+
+images:
+  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/stadiumos-admin:$COMMIT_SHA'
+  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/stadiumos-admin:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8'

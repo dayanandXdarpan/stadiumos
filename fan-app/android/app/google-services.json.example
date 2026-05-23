@@ -1,0 +1,37 @@
+{
+  "_comment": "IMPORTANT: This file is a placeholder. Replace it with the real google-services.json downloaded from your Firebase project.",
+  "_instructions": [
+    "1. Go to https://console.firebase.google.com/",
+    "2. Create or open your StadiumOS project",
+    "3. Add an Android app with package name: com.stadiumos.fan_app",
+    "4. Download google-services.json",
+    "5. Replace this file with the downloaded google-services.json",
+    "6. Run: flutter pub get && flutter run"
+  ],
+  "project_info": {
+    "project_number": "YOUR_PROJECT_NUMBER",
+    "project_id": "YOUR_PROJECT_ID",
+    "storage_bucket": "YOUR_PROJECT_ID.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "YOUR_MOBILESDK_APP_ID",
+        "android_client_info": {
+          "package_name": "com.stadiumos.fan_app"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "YOUR_API_KEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

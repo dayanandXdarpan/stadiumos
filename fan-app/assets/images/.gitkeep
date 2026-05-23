@@ -1,0 +1,3 @@
+# Assets directory for StadiumOS Fan App
+# Place stadium images, logos, and other assets here.
+# Referenced in pubspec.yaml under flutter.assets
