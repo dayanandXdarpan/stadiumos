@@ -63,9 +63,11 @@ out/
 # -----------------------------------------------------------------------------
 # Cloud & Security Secrets (NEVER COMMIT THESE)
 # -----------------------------------------------------------------------------
-# Environment Variables
+# Environment Variables — ALL levels
 .env
+**/.env
 .env.local
+**/.env.local
 .env.development.local
 .env.test.local
 .env.production.local

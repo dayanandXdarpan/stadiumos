@@ -29,12 +29,13 @@ steps:
       - '--platform=managed'
       - '--allow-unauthenticated'
       - '--port=8080'
-      - '--set-env-vars=GCP_PROJECT_ID=$PROJECT_ID,PUBSUB_TOPIC=${_PUBSUB_TOPIC},PUBSUB_SUBSCRIPTION=${_PUBSUB_SUBSCRIPTION},FIRESTORE_COLLECTION=${_FIRESTORE_COLLECTION}'
-      - '--set-secrets=GEMINI_API_KEY=gemini-api-key:latest'
-      - '--min-instances=1'
+      - '--set-env-vars=GCP_PROJECT_ID=$PROJECT_ID,PUBSUB_TOPIC=${_PUBSUB_TOPIC},PUBSUB_SUBSCRIPTION=${_PUBSUB_SUBSCRIPTION},FIRESTORE_COLLECTION=${_FIRESTORE_COLLECTION},CORS_ORIGINS=${_CORS_ORIGINS},EDGE_MODE=false'
+      - '--update-secrets=GEMINI_API_KEY=gemini-api-key:latest,API_TOKEN=stadiumos-api-token:latest'
+      - '--min-instances=0'
       - '--max-instances=10'
       - '--memory=1Gi'
       - '--cpu=1'
+      - '--concurrency=80'
 
 substitutions:
   _REGION: 'us-central1'
@@ -42,6 +43,7 @@ substitutions:
   _PUBSUB_TOPIC: 'stadium-events'
   _PUBSUB_SUBSCRIPTION: 'stadium-events-sub'
   _FIRESTORE_COLLECTION: 'stadium-state'
+  _CORS_ORIGINS: 'https://stadiumos-admin-xxxxxx-uc.a.run.app'
 
 images:
   - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO_NAME}/stadiumos-backend:$COMMIT_SHA'

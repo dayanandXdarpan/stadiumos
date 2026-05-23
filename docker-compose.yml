@@ -1,6 +1,10 @@
-version: "3.9"
+# ══════════════════════════════════════════════════════════════════════════
+# StadiumOS — Docker Compose (local development + Cloud Run simulation)
+# "version:" key removed — deprecated in Compose V2
+# ══════════════════════════════════════════════════════════════════════════
 
 services:
+  # ── Redis cache ──────────────────────────────────────────────────────────
   redis:
     image: redis:7-alpine
     container_name: stadiumos-redis
@@ -11,21 +15,31 @@ services:
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
+      timeout: 3s
       retries: 5
     restart: unless-stopped
 
+  # ── Python / FastAPI backend ─────────────────────────────────────────────
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: stadiumos-backend
     ports:
+      # Container exposes 8080 (PORT env), host listens on 8000 for local dev.
+      # Cloud Run will directly hit 8080 internally.
       - "8000:8080"
     environment:
+      - PORT=8080
       - REDIS_URL=redis://redis:6379
       - EDGE_MODE=false
+      - API_TOKEN=${API_TOKEN:-stadiumos-demo-token}
+      - CORS_ORIGINS=http://localhost:3000,http://admin:8080
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      # GCP credentials (optional — services degrade gracefully without them)
       - GOOGLE_APPLICATION_CREDENTIALS=/app/service-account.json
     volumes:
+      # Mount service-account.json only if it exists
       - ./backend/service-account.json:/app/service-account.json:ro
     env_file:
       - ./backend/.env
@@ -33,7 +47,34 @@ services:
       redis:
         condition: service_healthy
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
 
+  # ── Next.js Admin Dashboard ──────────────────────────────────────────────
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+        NEXT_PUBLIC_WS_URL: ws://localhost:8000/ws
+        NEXT_PUBLIC_API_TOKEN: ${API_TOKEN:-stadiumos-demo-token}
+    container_name: stadiumos-admin
+    ports:
+      - "3000:8080"
+    environment:
+      - PORT=8080
+      - NODE_ENV=production
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── Mock ingestor (opt-in via --profile ingestor) ──────────────────────
   mock-ingestor:
     build:
       context: ./backend
