@@ -11,6 +11,14 @@ const NAV_ITEMS = [
   { href: '/alerts',        icon: '🚨', label: 'Alerts'        },
   { href: '/ops-commander', icon: '🤖', label: 'Ops Commander' },
   { href: '/simulation',    icon: '🎛️', label: 'Simulation'    },
+  { href: '/supervisor',    icon: '👁️', label: 'Supervisor'    },
+];
+
+const UTILITY_ITEMS = [
+  { href: '/login',   icon: '🔐', label: 'Login'       },
+  { href: '/about',   icon: 'ℹ️',  label: 'About'       },
+  { href: '/privacy', icon: '🔒', label: 'Privacy'     },
+  { href: '/docs',    icon: '📖', label: 'API Docs'    },
 ];
 
 const AGENTS = [
@@ -53,6 +61,23 @@ export default function Sidebar({ isConnected }: SidebarProps) {
             key={item.href}
             href={item.href}
             className={`nav-link ${isActive(item.href) ? 'active' : ''}`}
+          >
+            <span className="nav-icon">{item.icon}</span>
+            <span className="nav-label">{item.label}</span>
+          </Link>
+        ))}
+
+        <div className="nav-divider">
+          <span className="nav-divider-label">PAGES</span>
+        </div>
+
+        {UTILITY_ITEMS.map(item => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`nav-link nav-link-utility ${isActive(item.href) ? 'active' : ''}`}
+            target={item.href === '/docs' ? '_blank' : undefined}
+            rel={item.href === '/docs' ? 'noopener noreferrer' : undefined}
           >
             <span className="nav-icon">{item.icon}</span>
             <span className="nav-label">{item.label}</span>

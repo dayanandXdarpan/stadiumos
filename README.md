@@ -1,6 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/StadiumOS-v1.0.0-blueviolet?style=for-the-badge" alt="StadiumOS" />
-  <img src="https://img.shields.io/badge/Build_With_AI-Agentic_Premier_League-00D4FF?style=for-the-badge" alt="Agentic Premier League" />
+  <img src="docs/assets/hero_banner.png" alt="StadiumOS Hero Banner" width="100%" />
 </p>
 
 <h1 align="center">🏟️ StadiumOS</h1>
@@ -8,6 +7,12 @@
 <p align="center">
   <strong>AI-Agent Powered Adaptive Stadium Intelligence Platform</strong><br/>
   <em>A cooperative multi-agent swarm system for real-time crowd safety, fan engagement, and operational intelligence.</em>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/StadiumOS-v1.0.0-blueviolet?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJ3aGl0ZSI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bTAgMThjLTQuNDIgMC04LTMuNTgtOC04czMuNTgtOCA4LTggOCAzLjU4IDggOC0zLjU4IDgtOCA4eiIvPjwvc3ZnPg==" alt="StadiumOS" />
+  <img src="https://img.shields.io/badge/Build_With_AI-Agentic_Premier_League-00D4FF?style=for-the-badge" alt="Agentic Premier League" />
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" />
 </p>
 
 <p align="center">
@@ -21,33 +26,91 @@
   <img src="https://img.shields.io/badge/Gemini_AI-1.5_Flash-4285F4?style=flat-square&logo=google&logoColor=white" alt="Gemini" />
   <img src="https://img.shields.io/badge/Docker-Ready-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" />
   <img src="https://img.shields.io/badge/Cloud_Run-Deploy-4285F4?style=flat-square&logo=google-cloud&logoColor=white" alt="Cloud Run" />
-  <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License" />
 </p>
 
 <p align="center">
-  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-overview">Overview</a> •
+  <a href="#-showcase">Showcase</a> •
   <a href="#-system-architecture">Architecture</a> •
   <a href="#-ai-agent-swarm">AI Agents</a> •
   <a href="#-features">Features</a> •
+  <a href="#-quick-start">Quick Start</a> •
   <a href="#-api-reference">API Reference</a> •
   <a href="#-deployment">Deployment</a> •
   <a href="#-contributing">Contributing</a>
 </p>
 
+<br/>
+
 ---
+
+<br/>
 
 ## 📖 Overview
 
 **StadiumOS** is a production-grade, AI-driven stadium management platform that employs a **cooperative multi-agent swarm** architecture to orchestrate real-time crowd safety, intelligent rerouting, fraud detection, weather adaptation, sentiment analysis, and emergency response — all unified through a **Blackboard shared-state system** powered by Redis.
 
-The platform spans three application tiers:
-- **🖥️ Admin Dashboard** — Next.js 16 command center with 3D Digital Twin, NLP OpsCommander, and live agent telemetry
-- **⚙️ Backend Brain** — FastAPI server running 6 autonomous AI agents on async tick loops with WebSocket broadcast
-- **📱 Fan App** — Flutter mobile experience with AR navigation, QR scanning, live alerts, and 3D seat visualization
+<table>
+  <tr>
+    <td width="33%" align="center">
+      <h3>🖥️ Admin Dashboard</h3>
+      <p>Next.js 16 command center with 3D Digital Twin, NLP OpsCommander, and live agent telemetry</p>
+    </td>
+    <td width="33%" align="center">
+      <h3>⚙️ Backend Brain</h3>
+      <p>FastAPI server running 6 autonomous AI agents on async tick loops with WebSocket broadcast</p>
+    </td>
+    <td width="33%" align="center">
+      <h3>📱 Fan App</h3>
+      <p>Flutter mobile experience with AR navigation, QR scanning, live alerts, and 3D seat visualization</p>
+    </td>
+  </tr>
+</table>
 
-> **Built for**: [Build with AI — Agentic Premier League 2026](https://www.dayananddarpan.in/) 🏆
+> **🏆 Built for**: [Build with AI — Agentic Premier League 2026](https://www.dayananddarpan.in/)
+>
+> 🌐 **Live Deployed App**: [StadiumOS Live Platform](https://stadiumosapl-28214196375.europe-west1.run.app/)
+>
+> ### 🖥️ Live Deployed Page Directory
+> * 🏠 **Command Center (Home)**: [stadiumosapl-28214196375.europe-west1.run.app/](https://stadiumosapl-28214196375.europe-west1.run.app/)
+> * 🔐 **Operator Login**: [/login](https://stadiumosapl-28214196375.europe-west1.run.app/login)
+> * 🔮 **3D Digital Twin**: [/digital-twin](https://stadiumosapl-28214196375.europe-west1.run.app/digital-twin)
+> * 🗺️ **Crowd Heatmap**: [/crowd-map](https://stadiumosapl-28214196375.europe-west1.run.app/crowd-map)
+> * 🚨 **Active Alerts**: [/alerts](https://stadiumosapl-28214196375.europe-west1.run.app/alerts)
+> * 🤖 **Agent Decision Ledger**: [/agent-ledger](https://stadiumosapl-28214196375.europe-west1.run.app/agent-ledger)
+> * 💬 **Ops Commander NLP**: [/ops-commander](https://stadiumosapl-28214196375.europe-west1.run.app/ops-commander)
+> * 👁️ **Supervisor Console (HITL)**: [/supervisor](https://stadiumosapl-28214196375.europe-west1.run.app/supervisor)
+> * 🎛️ **Scenario Simulation**: [/simulation](https://stadiumosapl-28214196375.europe-west1.run.app/simulation)
+> * 📖 **FastAPI Swagger Docs**: [/docs](https://stadiumosapl-28214196375.europe-west1.run.app/docs)
+> * ℹ️ **About Platform**: [/about](https://stadiumosapl-28214196375.europe-west1.run.app/about)
+> * 🔒 **Privacy & Compliance**: [/privacy](https://stadiumosapl-28214196375.europe-west1.run.app/privacy)
+
+<br/>
 
 ---
+
+<br/>
+
+## 🎬 Showcase
+
+<table>
+  <tr>
+    <td width="60%">
+      <img src="docs/assets/admin_dashboard.png" alt="Admin Dashboard — Command Center" width="100%" />
+      <p align="center"><strong>Admin Dashboard</strong> — Real-time command center with 16-sector CPS heatmap, agent activity feed, and system status</p>
+    </td>
+    <td width="40%">
+      <img src="docs/assets/fan_app_mockup.png" alt="Fan App — 3D Seat View & AR Navigation" width="100%" />
+      <p align="center"><strong>Fan App</strong> — 3D seat map, AR navigation, and live alerts with cyberpunk UI</p>
+    </td>
+  </tr>
+</table>
+
+<br/>
+
+---
+
+<br/>
 
 ## 🏗️ System Architecture
 
@@ -160,9 +223,17 @@ stateDiagram-v2
     end note
 ```
 
+<br/>
+
 ---
 
+<br/>
+
 ## 🤖 AI Agent Swarm
+
+<p align="center">
+  <img src="docs/assets/agent_swarm.png" alt="AI Agent Swarm Visualization" width="60%" />
+</p>
 
 StadiumOS employs **6 autonomous AI agents** running on asynchronous tick loops, coordinated via a shared Blackboard state pattern:
 
@@ -199,16 +270,59 @@ graph TB
 
 ### Agent Details
 
-| Agent | Tick | CPS Formula / Logic | Key Behavior |
-|:---|:---:|:---|:---|
-| **🔍 CrowdIntelligence** | 3s | `0.4×(density/500) + 0.35×(velocity/2) + 0.25×audioAnomaly` | Generates synthetic sensor data, computes CPS per sector, broadcasts `sector_update` via WebSocket. Supports edge offline mode (saves to SQLite). |
-| **🚦 FlowMaster** | 3s | Monitors CPS > threshold | Identifies 2 lowest-CPS alternative sectors and issues `REROUTE` commands. 15-second cooldown per sector. Handles explicit surge triggers from REST API. |
-| **🎫 TicketSentinel** | 2s | Duplicate barcode scan detection | Simulates 3–8 barcode scans per gate across 8 gates (A–H). 5% chance of duplicate injection. Flags `FRAUD` via scan-log matching. Supports offline mode. |
-| **🌩️ ClimaSync** | 3s | Storm → CPS threshold × 0.75 | Monitors `storm_active` flag. On storm: reduces CPS threshold by 25% (0.75 → 0.5625). Simulates weather polling with 5% chance of auto-triggering storm. |
-| **💬 SocialSentinel** | 15s | Sentiment score < -0.4 triggers alert | NLP sentiment analysis across 5 stadium clusters (North/South/East/West/Center). 10% chance of negative spike per tick. |
-| **🚨 EmergencyAgent** | 3s | CPS ≥ 0.90 → Evacuation | Computes nearest-exit evacuation routes (16 exits mapped to sectors). 60-second cooldown per sector. Broadcasts `EMERGENCY` alerts. |
+<table>
+  <thead>
+    <tr>
+      <th>Agent</th>
+      <th>Tick</th>
+      <th>CPS Formula / Logic</th>
+      <th>Key Behavior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>🔍 CrowdIntelligence</strong></td>
+      <td align="center"><code>3s</code></td>
+      <td><code>0.4×(density/500) + 0.35×(velocity/2) + 0.25×audioAnomaly</code></td>
+      <td>Generates synthetic sensor data, computes CPS per sector, broadcasts <code>sector_update</code> via WebSocket. Supports edge offline mode (saves to SQLite).</td>
+    </tr>
+    <tr>
+      <td><strong>🚦 FlowMaster</strong></td>
+      <td align="center"><code>3s</code></td>
+      <td>Monitors CPS > threshold</td>
+      <td>Identifies 2 lowest-CPS alternative sectors and issues <code>REROUTE</code> commands. 15-second cooldown per sector. Handles explicit surge triggers from REST API.</td>
+    </tr>
+    <tr>
+      <td><strong>🎫 TicketSentinel</strong></td>
+      <td align="center"><code>2s</code></td>
+      <td>Duplicate barcode scan detection</td>
+      <td>Simulates 3–8 barcode scans per gate across 8 gates (A–H). 5% chance of duplicate injection. Flags <code>FRAUD</code> via scan-log matching. Supports offline mode.</td>
+    </tr>
+    <tr>
+      <td><strong>🌩️ ClimaSync</strong></td>
+      <td align="center"><code>3s</code></td>
+      <td>Storm → CPS threshold × 0.75</td>
+      <td>Monitors <code>storm_active</code> flag. On storm: reduces CPS threshold by 25% (0.75 → 0.5625). Simulates weather polling with 5% chance of auto-triggering storm.</td>
+    </tr>
+    <tr>
+      <td><strong>💬 SocialSentinel</strong></td>
+      <td align="center"><code>15s</code></td>
+      <td>Sentiment score < -0.4 triggers alert</td>
+      <td>NLP sentiment analysis across 5 stadium clusters (North/South/East/West/Center). 10% chance of negative spike per tick.</td>
+    </tr>
+    <tr>
+      <td><strong>🚨 EmergencyAgent</strong></td>
+      <td align="center"><code>3s</code></td>
+      <td>CPS ≥ 0.90 → Evacuation</td>
+      <td>Computes nearest-exit evacuation routes (16 exits mapped to sectors). 60-second cooldown per sector. Broadcasts <code>EMERGENCY</code> alerts.</td>
+    </tr>
+  </tbody>
+</table>
 
-### Key Constants
+<details>
+<summary><strong>📐 Key Constants & Thresholds</strong></summary>
+
+<br/>
 
 | Parameter | Value | Description |
 |:---|:---:|:---|
@@ -222,51 +336,148 @@ graph TB
 | Gates | `8 (A–H)` | Perimeter entry points |
 | Barcode Pool | `500` | Simulated ticket barcodes |
 
+</details>
+
+<br/>
+
 ---
+
+<br/>
 
 ## ✨ Features
 
 ### 🖥️ Admin Dashboard — Next.js 16
 
-| Page / Route | Capabilities |
-|:---|:---|
-| **`/` — Command Center** | Real-time 16-sector grid with CPS heatmap, live agent activity feed, system status indicators, quick trigger controls (storm/surge/fraud) |
-| **`/digital-twin`** | WebGL-equivalent 3D Digital Twin with 8×12 seat grid, CPS color sync (Green→Yellow→Orange→Red), cubic swoop camera, cyan detour trails |
-| **`/ops-commander`** | NLP query bar powered by Gemini 1.5 Flash — natural language stadium control ("What's the crowd status at Gate B?") |
-| **`/agent-ledger`** | Forensic audit trail of all agent decisions with timestamps, reasoning chains, and zone context |
-| **`/crowd-map`** | Live crowd density visualization across all 16 sectors with real-time WebSocket updates |
-| **`/alerts`** | Active alert management panel with severity filtering (CRITICAL/WARNING/INFO) |
-| **`/simulation`** | Simulation control panel for triggering test scenarios (surges, storms, fraud events) |
-| **`/supervisor`** | Supervisor tablet view with HITL (Human-in-the-Loop) approval for agent detours, 60s dispatch timeout monitoring |
-| **`/login`** | Token-based authentication |
-| **`/about`, `/privacy`** | Informational and compliance pages |
+<table>
+  <thead>
+    <tr>
+      <th>Page / Route</th>
+      <th>Capabilities</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><code>/</code> — Command Center</strong></td>
+      <td>Real-time 16-sector grid with CPS heatmap, live agent activity feed, system status indicators, quick trigger controls (storm/surge/fraud)</td>
+    </tr>
+    <tr>
+      <td><strong><code>/digital-twin</code></strong></td>
+      <td>WebGL-equivalent 3D Digital Twin with 8×12 seat grid, CPS color sync (Green→Yellow→Orange→Red), cubic swoop camera, cyan detour trails</td>
+    </tr>
+    <tr>
+      <td><strong><code>/ops-commander</code></strong></td>
+      <td>NLP query bar powered by Gemini 1.5 Flash — natural language stadium control ("What's the crowd status at Gate B?")</td>
+    </tr>
+    <tr>
+      <td><strong><code>/agent-ledger</code></strong></td>
+      <td>Forensic audit trail of all agent decisions with timestamps, reasoning chains, and zone context</td>
+    </tr>
+    <tr>
+      <td><strong><code>/crowd-map</code></strong></td>
+      <td>Live crowd density visualization across all 16 sectors with real-time WebSocket updates</td>
+    </tr>
+    <tr>
+      <td><strong><code>/alerts</code></strong></td>
+      <td>Active alert management panel with severity filtering (CRITICAL/WARNING/INFO)</td>
+    </tr>
+    <tr>
+      <td><strong><code>/simulation</code></strong></td>
+      <td>Simulation control panel for triggering test scenarios (surges, storms, fraud events)</td>
+    </tr>
+    <tr>
+      <td><strong><code>/supervisor</code></strong></td>
+      <td>Supervisor tablet view with HITL (Human-in-the-Loop) approval for agent detours, 60s dispatch timeout monitoring</td>
+    </tr>
+    <tr>
+      <td><strong><code>/login</code></strong></td>
+      <td>Token-based authentication</td>
+    </tr>
+    <tr>
+      <td><strong><code>/about</code>, <code>/privacy</code></strong></td>
+      <td>Informational and compliance pages</td>
+    </tr>
+  </tbody>
+</table>
 
-**Design**: Dark glassmorphism theme with CSS custom properties, backdrop blur, purple/indigo accent gradients, custom animations.
+> 🎨 **Design**: Dark glassmorphism theme with CSS custom properties, backdrop blur, purple/indigo accent gradients, custom animations.
 
 ### 📱 Fan App — Flutter 3.x
 
-| Screen / Route | Capabilities |
-|:---|:---|
-| **`/` — Login** | Dual-role auth (Fan/Staff), QR code scanner with camera + laser sweep HUD, AI Welcome Concierge modal with weather-aware routing, particle animation background |
-| **`/seat-view`** | Full 3D Digital Twin seat map via `CustomPainter` (8×12 grid, perspective projection, gesture-based rotation/zoom), CPS-based danger tinting, FlowMaster reroute overlays, camera swoop animation |
-| **`/ar`** | AR camera navigation with 3-stage self-healing video fallback (local → CDN → procedural 3D wireframe), floating neon holographic directional arrow, real-time WebSocket rerouting with haptic feedback |
-| **`/alerts`** | Live alert feed with real-time WebSocket updates, type-based coloring (CRITICAL/WARNING/INFO/REROUTE), discount CTA on reroute alerts |
-| **`/staff-home`** | Staff responder console with animated radar scanner (`CustomPainter`), GPS coordinates simulation, emergency dispatch queue with Accept→Responding→Resolved workflow, offline SQLite ticket validation |
+<table>
+  <thead>
+    <tr>
+      <th>Screen / Route</th>
+      <th>Capabilities</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><code>/</code> — Login</strong></td>
+      <td>Dual-role auth (Fan/Staff), QR code scanner with camera + laser sweep HUD, AI Welcome Concierge modal with weather-aware routing, particle animation background</td>
+    </tr>
+    <tr>
+      <td><strong><code>/seat-view</code></strong></td>
+      <td>Full 3D Digital Twin seat map via <code>CustomPainter</code> (8×12 grid, perspective projection, gesture-based rotation/zoom), CPS-based danger tinting, FlowMaster reroute overlays, camera swoop animation</td>
+    </tr>
+    <tr>
+      <td><strong><code>/ar</code></strong></td>
+      <td>AR camera navigation with 3-stage self-healing video fallback (local → CDN → procedural 3D wireframe), floating neon holographic directional arrow, real-time WebSocket rerouting with haptic feedback</td>
+    </tr>
+    <tr>
+      <td><strong><code>/alerts</code></strong></td>
+      <td>Live alert feed with real-time WebSocket updates, type-based coloring (CRITICAL/WARNING/INFO/REROUTE), discount CTA on reroute alerts</td>
+    </tr>
+    <tr>
+      <td><strong><code>/staff-home</code></strong></td>
+      <td>Staff responder console with animated radar scanner (<code>CustomPainter</code>), GPS coordinates simulation, emergency dispatch queue with Accept→Responding→Resolved workflow, offline SQLite ticket validation</td>
+    </tr>
+  </tbody>
+</table>
 
-**Design**: Cyberpunk/sci-fi dark theme (`#0A0F1E` background), electric blue (`#00D4FF`) primary accent, glassmorphism via `BackdropFilter`, extensive `CustomPainter` usage for all visualizations (no 3D libraries), haptic feedback throughout.
+> 🎨 **Design**: Cyberpunk/sci-fi dark theme (`#0A0F1E` background), electric blue (`#00D4FF`) primary accent, glassmorphism via `BackdropFilter`, extensive `CustomPainter` usage for all visualizations (no 3D libraries), haptic feedback throughout.
 
 ### ⚙️ Backend Brain — FastAPI + Multi-Agent System
 
-| Capability | Details |
-|:---|:---|
-| **Blackboard Architecture** | Singleton shared-state pattern with `asyncio.Lock` thread safety. All 6 agents read/write to this central nervous system. |
-| **Redis Write-Through** | Every state mutation syncs to Redis via `RedisSyncedDict`. Graceful fallback to in-memory if Redis is unavailable. |
-| **WebSocket Hub** | Fan-out broadcasting to all connected clients. Full `init` snapshot on connect. Heartbeat pings every 30s. Message types: `sector_update`, `agent_action`, `alert`, `edge_status`. |
-| **Edge Offline Resilience** | SQLite-backed offline mode. `EdgeSyncWorker` polls every 8s, auto-flushes pending scans/telemetry on reconnect. Detects duplicate barcodes during sync. |
-| **AI/LLM Integration** | Gemini 1.5 Flash for NLP OpsCommander queries and post-match debrief generation. Rule-based fallbacks when API key is absent. |
-| **Pub/Sub Ingestion** | Optional Google Cloud Pub/Sub subscriber for `sensor_batch` messages from edge devices. |
+<table>
+  <thead>
+    <tr>
+      <th>Capability</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>🧠 Blackboard Architecture</strong></td>
+      <td>Singleton shared-state pattern with <code>asyncio.Lock</code> thread safety. All 6 agents read/write to this central nervous system.</td>
+    </tr>
+    <tr>
+      <td><strong>⚡ Redis Write-Through</strong></td>
+      <td>Every state mutation syncs to Redis via <code>RedisSyncedDict</code>. Graceful fallback to in-memory if Redis is unavailable.</td>
+    </tr>
+    <tr>
+      <td><strong>🔌 WebSocket Hub</strong></td>
+      <td>Fan-out broadcasting to all connected clients. Full <code>init</code> snapshot on connect. Heartbeat pings every 30s. Message types: <code>sector_update</code>, <code>agent_action</code>, <code>alert</code>, <code>edge_status</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>💾 Edge Offline Resilience</strong></td>
+      <td>SQLite-backed offline mode. <code>EdgeSyncWorker</code> polls every 8s, auto-flushes pending scans/telemetry on reconnect. Detects duplicate barcodes during sync.</td>
+    </tr>
+    <tr>
+      <td><strong>🤖 AI/LLM Integration</strong></td>
+      <td>Gemini 1.5 Flash for NLP OpsCommander queries and post-match debrief generation. Rule-based fallbacks when API key is absent.</td>
+    </tr>
+    <tr>
+      <td><strong>📡 Pub/Sub Ingestion</strong></td>
+      <td>Optional Google Cloud Pub/Sub subscriber for <code>sensor_batch</code> messages from edge devices.</td>
+    </tr>
+  </tbody>
+</table>
+
+<br/>
 
 ---
+
+<br/>
 
 ## 📂 Project Structure
 
@@ -354,6 +565,7 @@ stadiumos/
 │
 ├── 🔧 Configuration
 │   ├── docker-compose.yml                 # Multi-service orchestration
+│   ├── Makefile                           # Developer shortcuts
 │   ├── .env.example                       # Environment template
 │   └── .gitignore                         # Comprehensive ignore rules
 │
@@ -366,7 +578,11 @@ stadiumos/
             └── feature_request.md         # Feature request template
 ```
 
+<br/>
+
 ---
+
+<br/>
 
 ## 🔐 Security Architecture
 
@@ -411,7 +627,11 @@ graph TB
     style P2 fill:#475569,stroke:#334155,color:#fff
 ```
 
+<br/>
+
 ---
+
+<br/>
 
 ## 🚀 Quick Start
 
@@ -422,8 +642,8 @@ graph TB
 | **Python** | ≥ 3.11 | Backend runtime |
 | **Node.js** | ≥ 20.x | Admin dashboard |
 | **Flutter SDK** | ≥ 3.x | Fan mobile app |
-| **Redis** | ≥ 7.x | State caching (optional — graceful fallback) |
-| **Docker** | ≥ 20.x | Containerization (optional) |
+| **Redis** | ≥ 7.x | State caching *(optional — graceful fallback)* |
+| **Docker** | ≥ 20.x | Containerization *(optional)* |
 
 ### Option 1 — Local Development
 
@@ -435,35 +655,56 @@ cd stadiumos
 # 2. Set up environment
 cp .env.example backend/.env
 # Edit backend/.env — at minimum set GEMINI_API_KEY for AI features
+```
 
-# ── Start Backend (Terminal 1) ──────────────────────────
+<details>
+<summary><strong>🐍 Start Backend (Terminal 1)</strong></summary>
+
+```bash
 cd backend
 python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
+
 # → API running at http://localhost:8000
 # → WebSocket at ws://localhost:8000/ws
 # → Health check: http://localhost:8000/health
+```
 
-# ── Start Admin Dashboard (Terminal 2) ──────────────────
+</details>
+
+<details>
+<summary><strong>🖥️ Start Admin Dashboard (Terminal 2)</strong></summary>
+
+```bash
 cd admin
 npm install
 npm run dev
+
 # → Dashboard at http://localhost:3000
 # → Supervisor at http://localhost:3000/supervisor
+```
 
-# ── Start Fan App (Terminal 3) ──────────────────────────
+</details>
+
+<details>
+<summary><strong>📱 Start Fan App (Terminal 3)</strong></summary>
+
+```bash
 cd fan-app
 flutter pub get
 flutter run
+
 # → Mobile app launches on emulator/device
 ```
+
+</details>
 
 ### Option 2 — Docker Compose
 
 ```bash
-# Start backend + Redis (fan-app requires Flutter SDK locally)
+# Start all services (backend + admin + Redis)
 docker-compose up --build
 
 # With mock data ingestor:
@@ -471,7 +712,21 @@ docker-compose --profile ingestor up --build
 
 # Services:
 # Backend API  → http://localhost:8000
+# Admin Panel  → http://localhost:3000
 # Redis        → localhost:6379
+```
+
+### Option 3 — Makefile Shortcuts
+
+```bash
+make install          # Install all dependencies (backend + admin)
+make dev              # Start backend + admin concurrently
+make dev-backend      # Start Python backend only (port 8000)
+make dev-admin        # Start Next.js admin only (port 3000)
+make test-backend     # Run backend pytest suite
+make docker-up        # Start services via docker-compose
+make docker-down      # Stop all docker-compose services
+make clean            # Remove build artifacts
 ```
 
 ### Default Credentials
@@ -481,9 +736,13 @@ docker-compose --profile ingestor up --build
 | API Bearer Token | `stadiumos-demo-token` |
 | API Token Env Var | `API_TOKEN` in `.env` |
 
-> **Note**: If `API_TOKEN` is set to an empty string, authentication is completely disabled for development convenience.
+> **📝 Note**: If `API_TOKEN` is set to an empty string, authentication is completely disabled for development convenience.
+
+<br/>
 
 ---
+
+<br/>
 
 ## 📡 API Reference
 
@@ -497,7 +756,7 @@ Protected endpoints require the `Authorization: Bearer <token>` header:
 Authorization: Bearer stadiumos-demo-token
 ```
 
-### Endpoints Overview
+### Endpoints
 
 <details>
 <summary><strong>💚 Health Check</strong></summary>
@@ -552,6 +811,7 @@ Authorization: Bearer stadiumos-demo-token
 **On Connect**: Sends full `init` snapshot of blackboard state.
 
 **Server Broadcast Message Types**:
+
 | Type | Description |
 |:---|:---|
 | `sector_update` | Real-time CPS/density/velocity per sector (every 3s) |
@@ -562,7 +822,11 @@ Authorization: Bearer stadiumos-demo-token
 
 </details>
 
+<br/>
+
 ---
+
+<br/>
 
 ## 🐳 Docker & Deployment
 
@@ -573,14 +837,17 @@ graph LR
     subgraph "Docker Network"
         REDIS["⚡ Redis 7-Alpine<br/><small>Port 6379</small><br/><small>Health check: redis-cli ping</small>"]
         BACKEND["⚙️ Backend<br/><small>Port 8000→8080</small><br/><small>FastAPI + Agent Swarm</small>"]
+        ADMIN_D["🖥️ Admin Dashboard<br/><small>Port 3000→8080</small><br/><small>Next.js Production Build</small>"]
         INGESTOR["📡 Mock Ingestor<br/><small>Profile: ingestor</small><br/><small>Pub/Sub simulator</small>"]
     end
 
     BACKEND -->|"REDIS_URL"| REDIS
+    ADMIN_D -->|"depends_on"| BACKEND
     INGESTOR -->|"depends_on"| BACKEND
 
     style REDIS fill:#dc2626,stroke:#b91c1c,color:#fff
     style BACKEND fill:#059669,stroke:#047857,color:#fff
+    style ADMIN_D fill:#7c3aed,stroke:#5b21b6,color:#fff
     style INGESTOR fill:#6366f1,stroke:#4f46e5,color:#fff
 ```
 
@@ -600,7 +867,11 @@ gcloud builds submit --config admin/cloudbuild.yaml admin/
 # → Deploys admin dashboard to Cloud Run
 ```
 
+<br/>
+
 ---
+
+<br/>
 
 ## 🔑 Environment Variables
 
@@ -610,6 +881,8 @@ cp .env.example backend/.env
 
 <details>
 <summary><strong>View all environment variables</strong></summary>
+
+<br/>
 
 | Variable | Default | Description |
 |:---|:---|:---|
@@ -643,7 +916,11 @@ cp .env.example backend/.env
 
 </details>
 
+<br/>
+
 ---
+
+<br/>
 
 ## 🧪 Testing
 
@@ -670,11 +947,14 @@ graph TB
 cd backend
 python -m pytest tests/ -v --tb=short
 
-# With coverage
+# With coverage report
 python -m pytest tests/ --cov=. --cov-report=html
 ```
 
-### Key Test Scenarios
+<details>
+<summary><strong>📋 Key Test Scenarios</strong></summary>
+
+<br/>
 
 | Test File | Scenarios Covered |
 |:---|:---|
@@ -684,15 +964,24 @@ python -m pytest tests/ --cov=. --cov-report=html
 
 ### GDPR / Privacy Testing
 
-- Validates no biometric data caching
-- Cryptographic session token verification
-- Coarse bounding-box anonymization compliance
+- ✅ Validates no biometric data caching
+- ✅ Cryptographic session token verification
+- ✅ Coarse bounding-box anonymization compliance
+
+</details>
+
+<br/>
 
 ---
 
+<br/>
+
 ## 🛠️ Tech Stack
 
-### Backend (Python)
+<details>
+<summary><strong>🐍 Backend (Python)</strong></summary>
+
+<br/>
 
 | Technology | Version | Purpose |
 |:---|:---:|:---|
@@ -708,7 +997,12 @@ python -m pytest tests/ --cov=. --cov-report=html
 | Firestore | 2.16.1 | Cloud persistence |
 | Pub/Sub | 2.21.1 | Event stream ingestion |
 
-### Admin Dashboard (TypeScript)
+</details>
+
+<details>
+<summary><strong>🖥️ Admin Dashboard (TypeScript)</strong></summary>
+
+<br/>
 
 | Technology | Version | Purpose |
 |:---|:---:|:---|
@@ -717,7 +1011,12 @@ python -m pytest tests/ --cov=. --cov-report=html
 | TypeScript | 5.x | Type-safe JavaScript |
 | CSS Custom Properties | — | Design system (38KB globals.css) |
 
-### Fan App (Dart)
+</details>
+
+<details>
+<summary><strong>📱 Fan App (Dart)</strong></summary>
+
+<br/>
 
 | Technology | Version | Purpose |
 |:---|:---:|:---|
@@ -732,7 +1031,12 @@ python -m pytest tests/ --cov=. --cov-report=html
 | permission_handler | 11.3.0 | Runtime permissions |
 | google_fonts | — | Inter + Roboto Mono typography |
 
-### Infrastructure
+</details>
+
+<details>
+<summary><strong>☁️ Infrastructure</strong></summary>
+
+<br/>
 
 | Technology | Purpose |
 |:---|:---|
@@ -746,7 +1050,13 @@ python -m pytest tests/ --cov=. --cov-report=html
 | Firestore | Cloud document persistence |
 | Pub/Sub | Event stream ingestion |
 
+</details>
+
+<br/>
+
 ---
+
+<br/>
 
 ## 🤝 Contributing
 
@@ -770,7 +1080,10 @@ git push origin feat/your-feature-name
 | `docs/` | Documentation |
 | `refactor/` | Code restructuring |
 
-### Code Quality Standards
+<details>
+<summary><strong>📏 Code Quality Standards</strong></summary>
+
+<br/>
 
 | Layer | Standards |
 |:---|:---|
@@ -785,11 +1098,18 @@ git push origin feat/your-feature-name
 - [ ] No biometric data caching
 - [ ] Coarse bounding-box aggregation only
 
+</details>
+
+<br/>
+
 ---
+
+<br/>
 
 ## 📊 Roadmap
 
 ### ✅ Completed
+
 - [x] 6-agent cooperative swarm with Blackboard architecture
 - [x] 16-sector CPS (Crowd Pressure Score) monitoring system
 - [x] 3D Digital Twin with real-time CPS color sync
@@ -808,6 +1128,7 @@ git push origin feat/your-feature-name
 - [x] GitHub CI/CD + PR/Issue templates
 
 ### 🔮 Planned
+
 - [ ] PostgreSQL + PostGIS production database
 - [ ] Real YOLOv8 edge device integration
 - [ ] Pub/Sub live sensor stream pipeline
@@ -818,18 +1139,30 @@ git push origin feat/your-feature-name
 - [ ] k6 load testing for 100K concurrent users
 - [ ] Prometheus + Grafana observability stack
 
+<br/>
+
 ---
+
+<br/>
 
 ## 📜 License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
+<br/>
+
 ---
+
+<br/>
 
 ## 👥 Team
 
 <p align="center">
-  Built with ❤️ by <strong>Dayanand & Darpan</strong><br/>
+  <img src="https://img.shields.io/badge/Built_with-❤️-red?style=for-the-badge" alt="Built with love" />
+</p>
+
+<p align="center">
+  Built by <strong>Dayanand & Darpan</strong><br/>
   🌐 <a href="https://www.dayananddarpan.in/">dayananddarpan.in</a>
 </p>
 
@@ -837,8 +1170,10 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
   <strong>🏆 Built with AI — Agentic Premier League 2026</strong>
 </p>
 
+<br/>
+
 ---
 
 <p align="center">
-  <sub>⭐ Star this repo if you found it useful!</sub>
+  <sub>⭐ Star this repo if you found it useful! ⭐</sub>
 </p>

@@ -217,6 +217,47 @@ input, textarea, select { font-family: var(--font); }
 .nav-icon { font-size: 17px; width: 20px; text-align: center; }
 .nav-label { font-weight: 600; }
 
+/* Sidebar section divider */
+.nav-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px 4px;
+  margin-top: 4px;
+}
+
+.nav-divider-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  opacity: 0.6;
+  flex: 1;
+}
+
+.nav-divider::before {
+  content: '';
+  height: 1px;
+  background: var(--border);
+  flex: 1;
+  display: none;
+}
+
+/* Utility nav links — slightly more subdued */
+.nav-link-utility {
+  font-size: 12.5px;
+  opacity: 0.85;
+}
+
+.nav-link-utility:hover {
+  opacity: 1;
+}
+
+.nav-link-utility.active {
+  opacity: 1;
+}
+
 .sidebar-status {
   padding: 16px 20px;
   border-top: 1px solid var(--border);
@@ -1747,6 +1788,428 @@ input, textarea, select { font-family: var(--font); }
   color: var(--text-muted);
   line-height: 1.4;
   margin-top: 2px;
+}
+
+/* ── Digital Twin — Premium Enhancements ────────────────── */
+
+/* Header bar */
+.dt-header-bar {
+  padding: 20px 20px 18px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.dt-header-bar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 5%, var(--primary), #0066ff, transparent 95%);
+}
+
+.dt-header-bar::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.dt-header-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dt-header-title .dt-icon {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(0,102,255,0.15));
+  border: 1px solid rgba(0,212,255,0.3);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.dt-header-sub {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dt-live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse-glow 2s infinite;
+  flex-shrink: 0;
+}
+
+/* Section dividers */
+.dt-section-divider {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dt-section-title {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dt-section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+/* Live telemetry KPI grid */
+.dt-telemetry-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.dt-kpi-mini {
+  padding: 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.dt-kpi-mini:hover {
+  border-color: rgba(0,212,255,0.2);
+  background: rgba(255,255,255,0.035);
+  transform: translateY(-1px);
+}
+
+.dt-kpi-mini::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--kpi-color, var(--primary)), transparent);
+  opacity: 0.6;
+}
+
+.dt-kpi-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+}
+
+.dt-kpi-value {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--kpi-color, var(--primary));
+  line-height: 1;
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.dt-kpi-bar-track {
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.dt-kpi-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 0 6px var(--kpi-color, var(--primary));
+}
+
+/* Seat grid picker */
+.dt-seat-grid {
+  display: grid;
+  grid-template-columns: auto repeat(12, 1fr);
+  gap: 3px;
+  padding: 2px;
+}
+
+.dt-seat-grid-row-label {
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+}
+
+.dt-seat-dot {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: rgba(255,255,255,0.04);
+  position: relative;
+  min-width: 14px;
+}
+
+.dt-seat-dot:hover {
+  transform: scale(1.4);
+  z-index: 2;
+  border-color: var(--primary);
+  box-shadow: 0 0 8px rgba(0,212,255,0.5);
+}
+
+.dt-seat-dot.active {
+  border-color: #fff;
+  box-shadow: 0 0 10px rgba(0,212,255,0.7), 0 0 2px #fff;
+  transform: scale(1.3);
+  z-index: 3;
+}
+
+.dt-seat-col-labels {
+  display: contents;
+}
+
+.dt-seat-col-label {
+  font-size: 7px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.2);
+  text-align: center;
+}
+
+/* Canvas HUD overlays */
+.dt-canvas-wrap {
+  flex: 1;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.dt-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(5,7,12,0.7) 100%);
+}
+
+.dt-scan-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,212,255,0.012) 2px,
+    rgba(0,212,255,0.012) 4px
+  );
+  mix-blend-mode: screen;
+}
+
+.dt-crosshair {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0.12;
+}
+
+.dt-crosshair::before,
+.dt-crosshair::after {
+  content: '';
+  position: absolute;
+  background: var(--primary);
+}
+
+.dt-crosshair::before {
+  width: 1px; height: 40px;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dt-crosshair::after {
+  width: 40px; height: 1px;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dt-crosshair-ring {
+  width: 48px; height: 48px;
+  border: 1px solid var(--primary);
+  border-radius: 50%;
+  opacity: 0.15;
+}
+
+/* Mini-map */
+.dt-minimap {
+  position: absolute;
+  bottom: 20px; left: 20px;
+  width: 120px; height: 90px;
+  background: rgba(10,15,30,0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 8px;
+  z-index: 10;
+  overflow: hidden;
+  padding: 8px;
+}
+
+.dt-minimap-label {
+  font-size: 7px;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.dt-minimap-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  width: 100%;
+}
+
+.dt-minimap-cell {
+  aspect-ratio: 1;
+  border-radius: 2px;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: all 0.3s ease;
+}
+
+.dt-minimap-cell.mm-active {
+  border-color: var(--primary);
+  box-shadow: 0 0 6px rgba(0,212,255,0.5);
+}
+
+/* Top HUD bar on viewport */
+.dt-viewport-hud {
+  position: absolute;
+  top: 16px; left: 16px; right: 16px;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+
+.dt-viewport-hud > * {
+  pointer-events: auto;
+}
+
+.dt-hud-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dt-hud-sector-badge {
+  padding: 6px 14px;
+  background: rgba(10,15,30,0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.5px;
+}
+
+.dt-hud-sector-badge .badge-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dt-hud-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dt-btn-reset {
+  background: rgba(15,23,42,0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  color: white;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dt-btn-reset:hover {
+  border-color: var(--primary);
+  box-shadow: 0 0 16px rgba(0,212,255,0.25);
+  transform: translateY(-1px);
+}
+
+/* Floating seat info card */
+.dt-seat-info-float {
+  position: absolute;
+  bottom: 24px; right: 24px;
+  z-index: 10;
+  background: rgba(10, 15, 30, 0.9);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 22px;
+  max-width: 300px;
+  animation: fade-in 0.35s ease both;
+  box-shadow: 0 12px 40px -8px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,212,255,0.05);
+}
+
+.dt-seat-info-float::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 20px; right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+}
+
+/* Scanning sweep animation */
+@keyframes dt-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes dt-pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.6; }
+  50% { transform: scale(1.02); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.6; }
 }
 
 /* ── Footer ─────────────────────────────────────────────── */
