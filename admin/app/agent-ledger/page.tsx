@@ -15,6 +15,11 @@ const ALL_AGENTS = [
   'EmergencyAgent',
 ];
 
+const BASE_URL = typeof window !== 'undefined'
+  ? (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000')
+  : 'http://localhost:8000';
+const API_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN || 'stadiumos-demo-token';
+
 export default function AgentLedgerPage() {
   const { agentActions, isConnected } = useWebSocket();
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
@@ -62,9 +67,12 @@ export default function AgentLedgerPage() {
     }, 2000);
 
     try {
-      const res = await fetch('http://localhost:8000/api/post-match/debrief', {
+      const res = await fetch(`${BASE_URL}/api/post-match/debrief`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${API_TOKEN}`,
+        },
       });
       const data = await res.json();
       clearInterval(interval);
